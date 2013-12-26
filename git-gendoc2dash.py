@@ -1,6 +1,6 @@
 """
-    Generate Dash docset for Lynx2.5.7 Browser
-    http://lynx.isc.org/lynx2.8.7/lynx2-8-7/lynx_help/Lynx_users_guide.html
+    Generate Dash docset for Git
+    http://git-scm.com/docs
 """
 import sqlite3
 import os
