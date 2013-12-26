@@ -40,10 +40,8 @@ def add_docs():
     for i, link in enumerate(soup.findAll('a')):
         name = link.text.strip()
         path = link.get('href')
-        #print ("Name: {0}, Path:{1}".format(name, path))
 
         if path.startswith('/docs/'):
-            #print("NAME:{0} PATH:{1}".format(name, path))
             sections.append(path)
             titles.append(name)
 
@@ -55,7 +53,6 @@ def add_docs():
             folder += path.split("/")[i] + "/"
         if not os.path.exists(folder): os.makedirs(folder)
 
-        #print "%s:" % y, name, path
         print name, path
         try:
             # download docs
@@ -70,7 +67,6 @@ def add_docs():
             print " V"
 
             # update db
-            #name = l[y] + ': ' + name
             path += '.html'
             update_db(name, path)
             #y += 1
