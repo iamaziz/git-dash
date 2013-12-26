@@ -1,0 +1,278 @@
+<div id="main">
+<div class="man-page">
+<div id="header">
+<h1>git-remote(1) Manual Page</h1>
+<h2>NAME</h2>
+<div class="sectionbody"><div class="paragraph">
+<p>git-remote - manage set of tracked repositories
+</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_synopsis">SYNOPSIS</h3>
+<div class="verseblock">
+<pre class="content"><em>git remote</em> [-v | --verbose]
+<em>git remote add</em> [-t &lt;branch&gt;] [-m &lt;master&gt;] [-f] [--[no-]tags] [--mirror=&lt;fetch|push&gt;] &lt;name&gt; &lt;url&gt;
+<em>git remote rename</em> &lt;old&gt; &lt;new&gt;
+<em>git remote remove</em> &lt;name&gt;
+<em>git remote set-head</em> &lt;name&gt; (-a | --auto | -d | --delete | &lt;branch&gt;)
+<em>git remote set-branches</em> [--add] &lt;name&gt; &lt;branch&gt;...
+<em>git remote set-url</em> [--push] &lt;name&gt; &lt;newurl&gt; [&lt;oldurl&gt;]
+<em>git remote set-url --add</em> [--push] &lt;name&gt; &lt;newurl&gt;
+<em>git remote set-url --delete</em> [--push] &lt;name&gt; &lt;url&gt;
+<em>git remote</em> [-v | --verbose] <em>show</em> [-n] &lt;name&gt;...
+<em>git remote prune</em> [-n | --dry-run] &lt;name&gt;...
+<em>git remote</em> [-v | --verbose] <em>update</em> [-p | --prune] [(&lt;group&gt; | &lt;remote&gt;)...]</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_description">DESCRIPTION</h3>
+<div class="paragraph">
+<p>Manage the set of repositories ("remotes") whose branches you track.
+</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_options">OPTIONS</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">-v</dt>
+<dt class="hdlist1">--verbose</dt>
+<dd><p>Be a little more verbose and show remote url after name.
+NOTE: This must be placed between <tt>remote</tt> and <tt>subcommand</tt>.</p></dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands">COMMANDS</h3>
+<div class="paragraph">
+<p>With no arguments, shows a list of existing remotes.  Several
+subcommands are available to perform operations on the remotes.
+</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><em>add</em></dt>
+<dd><p>Adds a remote named &lt;name&gt; for the repository at
+&lt;url&gt;.  The command <tt>git fetch &lt;name&gt;</tt> can then be used to create and
+update remote-tracking branches &lt;name&gt;/&lt;branch&gt;.</p><div class="paragraph">
+<p>With <tt>-f</tt> option, <tt>git fetch &lt;name&gt;</tt> is run immediately after
+the remote information is set up.
+</p>
+</div>
+<div class="paragraph">
+<p>With <tt>--tags</tt> option, <tt>git fetch &lt;name&gt;</tt> imports every tag from the
+remote repository.
+</p>
+</div>
+<div class="paragraph">
+<p>With <tt>--no-tags</tt> option, <tt>git fetch &lt;name&gt;</tt> does not import tags from
+the remote repository.
+</p>
+</div>
+<div class="paragraph">
+<p>With <tt>-t &lt;branch&gt;</tt> option, instead of the default glob
+refspec for the remote to track all branches under
+the <tt>refs/remotes/&lt;name&gt;/</tt> namespace, a refspec to track only <tt>&lt;branch&gt;</tt>
+is created.  You can give more than one <tt>-t &lt;branch&gt;</tt> to track
+multiple branches without grabbing all branches.
+</p>
+</div>
+<div class="paragraph">
+<p>With <tt>-m &lt;master&gt;</tt> option, a symbolic-ref <tt>refs/remotes/&lt;name&gt;/HEAD</tt> is set
+up to point at remote's <tt>&lt;master&gt;</tt> branch. See also the set-head command.
+</p>
+</div>
+<div class="paragraph">
+<p>When a fetch mirror is created with <tt>--mirror=fetch</tt>, the refs will not
+be stored in the <em>refs/remotes/</em> namespace, but rather everything in
+<em>refs/</em> on the remote will be directly mirrored into <em>refs/</em> in the
+local repository. This option only makes sense in bare repositories,
+because a fetch would overwrite any local commits.
+</p>
+</div>
+<div class="paragraph">
+<p>When a push mirror is created with <tt>--mirror=push</tt>, then <tt>git push</tt>
+will always behave as if <tt>--mirror</tt> was passed.
+</p>
+</div>
+</dd>
+<dt class="hdlist1"><em>rename</em></dt>
+<dd><p>Rename the remote named &lt;old&gt; to &lt;new&gt;. All remote-tracking branches and
+configuration settings for the remote are updated.</p><div class="paragraph">
+<p>In case &lt;old&gt; and &lt;new&gt; are the same, and &lt;old&gt; is a file under
+<tt>$GIT_DIR/remotes</tt> or <tt>$GIT_DIR/branches</tt>, the remote is converted to
+the configuration file format.
+</p>
+</div>
+</dd>
+<dt class="hdlist1"><em>remove</em></dt>
+<dt class="hdlist1"><em>rm</em></dt>
+<dd><p>Remove the remote named &lt;name&gt;. All remote-tracking branches and
+configuration settings for the remote are removed.</p></dd>
+<dt class="hdlist1"><em>set-head</em></dt>
+<dd><p>Sets or deletes the default branch (i.e. the target of the
+symbolic-ref <tt>refs/remotes/&lt;name&gt;/HEAD</tt>) for
+the named remote. Having a default branch for a remote is not required,
+but allows the name of the remote to be specified in lieu of a specific
+branch. For example, if the default branch for <tt>origin</tt> is set to
+<tt>master</tt>, then <tt>origin</tt> may be specified wherever you would normally
+specify <tt>origin/master</tt>.</p><div class="paragraph">
+<p>With <tt>-d</tt> or <tt>--delete</tt>, the symbolic ref <tt>refs/remotes/&lt;name&gt;/HEAD</tt> is deleted.
+</p>
+</div>
+<div class="paragraph">
+<p>With <tt>-a</tt> or <tt>--auto</tt>, the remote is queried to determine its <tt>HEAD</tt>, then the
+symbolic-ref <tt>refs/remotes/&lt;name&gt;/HEAD</tt> is set to the same branch. e.g., if the remote
+<tt>HEAD</tt> is pointed at <tt>next</tt>, "<tt>git remote set-head origin -a</tt>" will set
+the symbolic-ref <tt>refs/remotes/origin/HEAD</tt> to <tt>refs/remotes/origin/next</tt>. This will
+only work if <tt>refs/remotes/origin/next</tt> already exists; if not it must be
+fetched first.
+</p>
+</div>
+<div class="paragraph">
+<p>Use <tt>&lt;branch&gt;</tt> to set the symbolic-ref <tt>refs/remotes/&lt;name&gt;/HEAD</tt> explicitly. e.g., "git
+remote set-head origin master" will set the symbolic-ref <tt>refs/remotes/origin/HEAD</tt> to
+<tt>refs/remotes/origin/master</tt>. This will only work if
+<tt>refs/remotes/origin/master</tt> already exists; if not it must be fetched first.
+</p>
+</div>
+</dd>
+<dt class="hdlist1"><em>set-branches</em></dt>
+<dd><p>Changes the list of branches tracked by the named remote.
+This can be used to track a subset of the available remote branches
+after the initial setup for a remote.</p><div class="paragraph">
+<p>The named branches will be interpreted as if specified with the
+<tt>-t</tt> option on the <em>git remote add</em> command line.
+</p>
+</div>
+<div class="paragraph">
+<p>With <tt>--add</tt>, instead of replacing the list of currently tracked
+branches, adds to that list.
+</p>
+</div>
+</dd>
+<dt class="hdlist1"><em>set-url</em></dt>
+<dd><p>Changes URL remote points to. Sets first URL remote points to matching
+regex &lt;oldurl&gt; (first URL if no &lt;oldurl&gt; is given) to &lt;newurl&gt;. If
+&lt;oldurl&gt; doesn't match any URL, error occurs and nothing is changed.</p><div class="paragraph">
+<p>With <em>--push</em>, push URLs are manipulated instead of fetch URLs.
+</p>
+</div>
+<div class="paragraph">
+<p>With <em>--add</em>, instead of changing some URL, new URL is added.
+</p>
+</div>
+<div class="paragraph">
+<p>With <em>--delete</em>, instead of changing some URL, all URLs matching
+regex &lt;url&gt; are deleted. Trying to delete all non-push URLs is an
+error.
+</p>
+</div>
+</dd>
+<dt class="hdlist1"><em>show</em></dt>
+<dd><p>Gives some information about the remote &lt;name&gt;.</p><div class="paragraph">
+<p>With <tt>-n</tt> option, the remote heads are not queried first with
+<tt>git ls-remote &lt;name&gt;</tt>; cached information is used instead.
+</p>
+</div>
+</dd>
+<dt class="hdlist1"><em>prune</em></dt>
+<dd><p>Deletes all stale remote-tracking branches under &lt;name&gt;.
+These stale branches have already been removed from the remote repository
+referenced by &lt;name&gt;, but are still locally available in
+"remotes/&lt;name&gt;".</p><div class="paragraph">
+<p>With <tt>--dry-run</tt> option, report what branches will be pruned, but do not
+actually prune them.
+</p>
+</div>
+</dd>
+<dt class="hdlist1"><em>update</em></dt>
+<dd><p>Fetch updates for a named set of remotes in the repository as defined by
+remotes.&lt;group&gt;.  If a named group is not specified on the command line,
+the configuration parameter remotes.default will be used; if
+remotes.default is not defined, all remotes which do not have the
+configuration parameter remote.&lt;name&gt;.skipDefaultUpdate set to true will
+be updated.  (See <a href="git-config.html">git-config(1)</a>).</p><div class="paragraph">
+<p>With <tt>--prune</tt> option, prune all the remotes that are updated.
+</p>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_discussion">DISCUSSION</h3>
+<div class="paragraph">
+<p>The remote configuration is achieved using the <tt>remote.origin.url</tt> and
+<tt>remote.origin.fetch</tt> configuration variables.  (See
+<a href="git-config.html">git-config(1)</a>).
+</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_examples">Examples</h3>
+<div class="ulist">
+<ul>
+<li><p>Add a new remote, fetch, and check out a branch from it</p><div class="listingblock">
+<div class="content">
+<pre><tt>$ git remote
+origin
+$ git branch -r
+  origin/HEAD -&gt; origin/master
+  origin/master
+$ git remote add staging git://git.kernel.org/.../gregkh/staging.git
+$ git remote
+origin
+staging
+$ git fetch staging
+...
+From git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/staging
+ * [new branch]      master     -&gt; staging/master
+ * [new branch]      staging-linus -&gt; staging/staging-linus
+ * [new branch]      staging-next -&gt; staging/staging-next
+$ git branch -r
+  origin/HEAD -&gt; origin/master
+  origin/master
+  staging/master
+  staging/staging-linus
+  staging/staging-next
+$ git checkout -b staging staging/master
+...
+</tt></pre>
+</div>
+</div>
+</li>
+<li><p>Imitate <em>git clone</em> but track only selected branches</p><div class="listingblock">
+<div class="content">
+<pre><tt>$ mkdir project.git
+$ cd project.git
+$ git init
+$ git remote add -f -t master -m master origin git://example.com/git.git/
+$ git merge origin
+</tt></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_see_also">SEE ALSO</h3>
+<div class="paragraph">
+<p><a href="git-fetch.html">git-fetch(1)</a>
+<a href="git-branch.html">git-branch(1)</a>
+<a href="git-config.html">git-config(1)</a>
+</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_git">GIT</h3>
+<div class="paragraph">
+<p>Part of the <a href="git.html">git(1)</a> suite
+</p>
+</div>
+</div>
+</div>
+</div>

@@ -1,0 +1,203 @@
+<div id="main">
+<div class="man-page">
+<div id="header">
+<h1>git-cat-file(1) Manual Page</h1>
+<h2>NAME</h2>
+<div class="sectionbody"><div class="paragraph">
+<p>git-cat-file - Provide content or type and size information for repository objects
+</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_synopsis">SYNOPSIS</h3>
+<div class="verseblock">
+<pre class="content"><em>git cat-file</em> (-t | -s | -e | -p | &lt;type&gt; | --textconv ) &lt;object&gt;
+<em>git cat-file</em> (--batch | --batch-check) &lt; &lt;list-of-objects&gt;</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_description">DESCRIPTION</h3>
+<div class="paragraph">
+<p>In its first form, the command provides the content or the type of an object in
+the repository. The type is required unless <em>-t</em> or <em>-p</em> is used to find the
+object type, or <em>-s</em> is used to find the object size, or <em>--textconv</em> is used
+(which implies type "blob").
+</p>
+</div>
+<div class="paragraph">
+<p>In the second form, a list of objects (separated by linefeeds) is provided on
+stdin, and the SHA-1, type, and size of each object is printed on stdout.
+</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_options">OPTIONS</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">&lt;object&gt;</dt>
+<dd><p>The name of the object to show.
+For a more complete list of ways to spell object names, see
+the "SPECIFYING REVISIONS" section in <a href="gitrevisions.html">gitrevisions(7)</a>.</p></dd>
+<dt class="hdlist1">-t</dt>
+<dd><p>Instead of the content, show the object type identified by
+&lt;object&gt;.</p></dd>
+<dt class="hdlist1">-s</dt>
+<dd><p>Instead of the content, show the object size identified by
+&lt;object&gt;.</p></dd>
+<dt class="hdlist1">-e</dt>
+<dd><p>Suppress all output; instead exit with zero status if &lt;object&gt;
+exists and is a valid object.</p></dd>
+<dt class="hdlist1">-p</dt>
+<dd><p>Pretty-print the contents of &lt;object&gt; based on its type.</p></dd>
+<dt class="hdlist1">&lt;type&gt;</dt>
+<dd><p>Typically this matches the real type of &lt;object&gt; but asking
+for a type that can trivially be dereferenced from the given
+&lt;object&gt; is also permitted.  An example is to ask for a
+"tree" with &lt;object&gt; being a commit object that contains it,
+or to ask for a "blob" with &lt;object&gt; being a tag object that
+points at it.</p></dd>
+<dt class="hdlist1">--textconv</dt>
+<dd><p>Show the content as transformed by a textconv filter. In this case,
+&lt;object&gt; has be of the form &lt;tree-ish&gt;:&lt;path&gt;, or :&lt;path&gt; in order
+to apply the filter to the content recorded in the index at &lt;path&gt;.</p></dd>
+<dt class="hdlist1">--batch</dt>
+<dt class="hdlist1">--batch=&lt;format&gt;</dt>
+<dd><p>Print object information and contents for each object provided
+on stdin.  May not be combined with any other options or arguments.
+See the section <tt>BATCH OUTPUT</tt> below for details.</p></dd>
+<dt class="hdlist1">--batch-check</dt>
+<dt class="hdlist1">--batch-check=&lt;format&gt;</dt>
+<dd><p>Print object information for each object provided on stdin.  May
+not be combined with any other options or arguments.  See the
+section <tt>BATCH OUTPUT</tt> below for details.</p></dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_output">OUTPUT</h3>
+<div class="paragraph">
+<p>If <em>-t</em> is specified, one of the &lt;type&gt;.
+</p>
+</div>
+<div class="paragraph">
+<p>If <em>-s</em> is specified, the size of the &lt;object&gt; in bytes.
+</p>
+</div>
+<div class="paragraph">
+<p>If <em>-e</em> is specified, no output.
+</p>
+</div>
+<div class="paragraph">
+<p>If <em>-p</em> is specified, the contents of &lt;object&gt; are pretty-printed.
+</p>
+</div>
+<div class="paragraph">
+<p>If &lt;type&gt; is specified, the raw (though uncompressed) contents of the &lt;object&gt;
+will be returned.
+</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_batch_output">BATCH OUTPUT</h3>
+<div class="paragraph">
+<p>If <tt>--batch</tt> or <tt>--batch-check</tt> is given, <tt>cat-file</tt> will read objects
+from stdin, one per line, and print information about them. By default,
+the whole line is considered as an object, as if it were fed to
+<a href="git-rev-parse.html">git-rev-parse(1)</a>.
+</p>
+</div>
+<div class="paragraph">
+<p>You can specify the information shown for each object by using a custom
+<tt>&lt;format&gt;</tt>. The <tt>&lt;format&gt;</tt> is copied literally to stdout for each
+object, with placeholders of the form <tt>%(atom)</tt> expanded, followed by a
+newline. The available atoms are:
+</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><tt>objectname</tt></dt>
+<dd><p>The 40-hex object name of the object.</p></dd>
+<dt class="hdlist1"><tt>objecttype</tt></dt>
+<dd><p>The type of of the object (the same as <tt>cat-file -t</tt> reports).</p></dd>
+<dt class="hdlist1"><tt>objectsize</tt></dt>
+<dd><p>The size, in bytes, of the object (the same as <tt>cat-file -s</tt>
+reports).</p></dd>
+<dt class="hdlist1"><tt>objectsize:disk</tt></dt>
+<dd><p>The size, in bytes, that the object takes up on disk. See the
+note about on-disk sizes in the <tt>CAVEATS</tt> section below.</p></dd>
+<dt class="hdlist1"><tt>rest</tt></dt>
+<dd><p>If this atom is used in the output string, input lines are split
+at the first whitespace boundary. All characters before that
+whitespace are considered to be the object name; characters
+after that first run of whitespace (i.e., the "rest" of the
+line) are output in place of the <tt>%(rest)</tt> atom.</p></dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>If no format is specified, the default format is <tt>%(objectname)
+%(objecttype) %(objectsize)</tt>.
+</p>
+</div>
+<div class="paragraph">
+<p>If <tt>--batch</tt> is specified, the object information is followed by the
+object contents (consisting of <tt>%(objectsize)</tt> bytes), followed by a
+newline.
+</p>
+</div>
+<div class="paragraph">
+<p>For example, <tt>--batch</tt> without a custom format would produce:
+</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>&lt;sha1&gt; SP &lt;type&gt; SP &lt;size&gt; LF
+&lt;contents&gt; LF
+</tt></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Whereas <tt>--batch-check='%(objectname) %(objecttype)'</tt> would produce:
+</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>&lt;sha1&gt; SP &lt;type&gt; LF
+</tt></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If a name is specified on stdin that cannot be resolved to an object in
+the repository, then <tt>cat-file</tt> will ignore any custom format and print:
+</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>&lt;object&gt; SP missing LF
+</tt></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_caveats">CAVEATS</h3>
+<div class="paragraph">
+<p>Note that the sizes of objects on disk are reported accurately, but care
+should be taken in drawing conclusions about which refs or objects are
+responsible for disk usage. The size of a packed non-delta object may be
+much larger than the size of objects which delta against it, but the
+choice of which object is the base and which is the delta is arbitrary
+and is subject to change during a repack. Note also that multiple copies
+of an object may be present in the object database; in this case, it is
+undefined which copy's size will be reported.
+</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_git">GIT</h3>
+<div class="paragraph">
+<p>Part of the <a href="git.html">git(1)</a> suite
+</p>
+</div>
+</div>
+</div>
+</div>

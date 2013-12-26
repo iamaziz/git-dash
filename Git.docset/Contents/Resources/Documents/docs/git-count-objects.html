@@ -1,0 +1,85 @@
+<div id="main">
+<div class="man-page">
+<div id="header">
+<h1>git-count-objects(1) Manual Page</h1>
+<h2>NAME</h2>
+<div class="sectionbody"><div class="paragraph">
+<p>git-count-objects - Count unpacked number of objects and their disk consumption
+</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_synopsis">SYNOPSIS</h2>
+<div class="sectionbody"><div class="verseblock">
+<pre class="content"><em>git count-objects</em> [-v] [-H | --human-readable]</pre>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_description">DESCRIPTION</h2>
+<div class="sectionbody"><div class="paragraph">
+<p>This counts the number of unpacked object files and disk space consumed by
+them, to help you decide when it is a good time to repack.
+</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_options">OPTIONS</h2>
+<div class="sectionbody"><div class="dlist">
+<dl>
+<dt class="hdlist1">-v</dt>
+<dt class="hdlist1">--verbose</dt>
+<dd><p>Report in more detail:</p><div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>count: the number of loose objects
+</p>
+</div>
+<div class="paragraph">
+<p>size: disk space consumed by loose objects, in KiB (unless -H is specified)
+</p>
+</div>
+<div class="paragraph">
+<p>in-pack: the number of in-pack objects
+</p>
+</div>
+<div class="paragraph">
+<p>size-pack: disk space consumed by the packs, in KiB (unless -H is specified)
+</p>
+</div>
+<div class="paragraph">
+<p>prune-packable: the number of loose objects that are also present in
+the packs. These objects could be pruned using <tt>git prune-packed</tt>.
+</p>
+</div>
+<div class="paragraph">
+<p>garbage: the number of files in object database that are not valid
+loose objects nor valid packs
+</p>
+</div>
+<div class="paragraph">
+<p>size-garbage: disk space consumed by garbage files, in KiB (unless -H is
+specified)
+</p>
+</div>
+</dd>
+<dt class="hdlist1">-H</dt>
+<dt class="hdlist1">--human-readable</dt>
+<dd><p>Print sizes in human readable format</p></dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_git">GIT</h2>
+<div class="sectionbody"><div class="paragraph">
+<p>Part of the <a href="git.html">git(1)</a> suite
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>

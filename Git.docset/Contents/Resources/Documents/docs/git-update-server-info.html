@@ -1,0 +1,67 @@
+<div id="main">
+<div class="man-page">
+<div id="header">
+<h1>git-update-server-info(1) Manual Page</h1>
+<h2>NAME</h2>
+<div class="sectionbody"><div class="paragraph">
+<p>git-update-server-info - Update auxiliary info file to help dumb servers
+</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_synopsis">SYNOPSIS</h2>
+<div class="sectionbody"><div class="verseblock">
+<pre class="content"><em>git update-server-info</em> [--force]</pre>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_description">DESCRIPTION</h2>
+<div class="sectionbody"><div class="paragraph">
+<p>A dumb server that does not do on-the-fly pack generations must
+have some auxiliary information files in $GIT_DIR/info and
+$GIT_OBJECT_DIRECTORY/info directories to help clients discover
+what references and packs the server has.  This command
+generates such auxiliary files.
+</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_options">OPTIONS</h2>
+<div class="sectionbody"><div class="dlist">
+<dl>
+<dt class="hdlist1">-f</dt>
+<dt class="hdlist1">--force</dt>
+<dd><p>Update the info files from scratch.</p></dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_output">OUTPUT</h2>
+<div class="sectionbody"><div class="paragraph">
+<p>Currently the command updates the following files.  Please see
+<a href="gitrepository-layout.html">gitrepository-layout(5)</a> for description of
+what they are for:
+</p>
+</div>
+<div class="ulist">
+<ul>
+<li><p>objects/info/packs</p></li>
+<li><p>info/refs</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_git">GIT</h2>
+<div class="sectionbody"><div class="paragraph">
+<p>Part of the <a href="git.html">git(1)</a> suite
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>

@@ -1,0 +1,86 @@
+<div id="main">
+<div class="man-page">
+<div id="header">
+<h1>git-verify-pack(1) Manual Page</h1>
+<h2>NAME</h2>
+<div class="sectionbody"><div class="paragraph">
+<p>git-verify-pack - Validate packed Git archive files
+</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_synopsis">SYNOPSIS</h2>
+<div class="sectionbody"><div class="verseblock">
+<pre class="content"><em>git verify-pack</em> [-v|--verbose] [-s|--stat-only] [--] &lt;pack&gt;.idx ...</pre>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_description">DESCRIPTION</h2>
+<div class="sectionbody"><div class="paragraph">
+<p>Reads given idx file for packed Git archive created with the
+<em>git pack-objects</em> command and verifies idx file and the
+corresponding pack file.
+</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_options">OPTIONS</h2>
+<div class="sectionbody"><div class="dlist">
+<dl>
+<dt class="hdlist1">&lt;pack&gt;.idx ...</dt>
+<dd><p>The idx files to verify.</p></dd>
+<dt class="hdlist1">-v</dt>
+<dt class="hdlist1">--verbose</dt>
+<dd><p>After verifying the pack, show list of objects contained
+in the pack and a histogram of delta chain length.</p></dd>
+<dt class="hdlist1">-s</dt>
+<dt class="hdlist1">--stat-only</dt>
+<dd><p>Do not verify the pack contents; only show the histogram of delta
+chain length.  With <tt>--verbose</tt>, list of objects is also shown.</p></dd>
+<dt class="hdlist1">--</dt>
+<dd><p>Do not interpret any more arguments as options.</p></dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_output_format">OUTPUT FORMAT</h2>
+<div class="sectionbody"><div class="paragraph">
+<p>When specifying the -v option the format used is:
+</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>	SHA-1 type size size-in-pack-file offset-in-packfile
+</tt></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>for objects that are not deltified in the pack, and
+</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>	SHA-1 type size size-in-packfile offset-in-packfile depth base-SHA-1
+</tt></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>for objects that are deltified.
+</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_git">GIT</h2>
+<div class="sectionbody"><div class="paragraph">
+<p>Part of the <a href="git.html">git(1)</a> suite
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>

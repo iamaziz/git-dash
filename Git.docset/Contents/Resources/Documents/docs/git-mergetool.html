@@ -1,0 +1,131 @@
+<div id="main">
+<div class="man-page">
+<div id="header">
+<h1>git-mergetool(1) Manual Page</h1>
+<h2>NAME</h2>
+<div class="sectionbody"><div class="paragraph">
+<p>git-mergetool - Run merge conflict resolution tools to resolve merge conflicts
+</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_synopsis">SYNOPSIS</h2>
+<div class="sectionbody"><div class="verseblock">
+<pre class="content"><em>git mergetool</em> [--tool=&lt;tool&gt;] [-y | --[no-]prompt] [&lt;file&gt;...]</pre>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_description">DESCRIPTION</h2>
+<div class="sectionbody"><div class="paragraph">
+<p>Use <tt>git mergetool</tt> to run one of several merge utilities to resolve
+merge conflicts.  It is typically run after <em>git merge</em>.
+</p>
+</div>
+<div class="paragraph">
+<p>If one or more &lt;file&gt; parameters are given, the merge tool program will
+be run to resolve differences on each file (skipping those without
+conflicts).  Specifying a directory will include all unresolved files in
+that path.  If no &lt;file&gt; names are specified, <em>git mergetool</em> will run
+the merge tool program on every file with merge conflicts.
+</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_options">OPTIONS</h2>
+<div class="sectionbody"><div class="dlist">
+<dl>
+<dt class="hdlist1">-t &lt;tool&gt;</dt>
+<dt class="hdlist1">--tool=&lt;tool&gt;</dt>
+<dd><p>Use the merge resolution program specified by &lt;tool&gt;.
+Valid values include emerge, gvimdiff, kdiff3,
+meld, vimdiff, and tortoisemerge. Run <tt>git mergetool --tool-help</tt>
+for the list of valid &lt;tool&gt; settings.</p><div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>If a merge resolution program is not specified, <em>git mergetool</em>
+will use the configuration variable <tt>merge.tool</tt>.  If the
+configuration variable <tt>merge.tool</tt> is not set, <em>git mergetool</em>
+will pick a suitable default.
+</p>
+</div>
+<div class="paragraph">
+<p>You can explicitly provide a full path to the tool by setting the
+configuration variable <tt>mergetool.&lt;tool&gt;.path</tt>. For example, you
+can configure the absolute path to kdiff3 by setting
+<tt>mergetool.kdiff3.path</tt>. Otherwise, <em>git mergetool</em> assumes the
+tool is available in PATH.
+</p>
+</div>
+<div class="paragraph">
+<p>Instead of running one of the known merge tool programs,
+<em>git mergetool</em> can be customized to run an alternative program
+by specifying the command line to invoke in a configuration
+variable <tt>mergetool.&lt;tool&gt;.cmd</tt>.
+</p>
+</div>
+<div class="paragraph">
+<p>When <em>git mergetool</em> is invoked with this tool (either through the
+<tt>-t</tt> or <tt>--tool</tt> option or the <tt>merge.tool</tt> configuration
+variable) the configured command line will be invoked with <tt>$BASE</tt>
+set to the name of a temporary file containing the common base for
+the merge, if available; <tt>$LOCAL</tt> set to the name of a temporary
+file containing the contents of the file on the current branch;
+<tt>$REMOTE</tt> set to the name of a temporary file containing the
+contents of the file to be merged, and <tt>$MERGED</tt> set to the name
+of the file to which the merge tool should write the result of the
+merge resolution.
+</p>
+</div>
+<div class="paragraph">
+<p>If the custom merge tool correctly indicates the success of a
+merge resolution with its exit code, then the configuration
+variable <tt>mergetool.&lt;tool&gt;.trustExitCode</tt> can be set to <tt>true</tt>.
+Otherwise, <em>git mergetool</em> will prompt the user to indicate the
+success of the resolution after the custom tool has exited.
+</p>
+</div>
+</dd>
+<dt class="hdlist1">--tool-help</dt>
+<dd><p>Print a list of merge tools that may be used with <tt>--tool</tt>.</p></dd>
+<dt class="hdlist1">-y</dt>
+<dt class="hdlist1">--no-prompt</dt>
+<dd><p>Don't prompt before each invocation of the merge resolution
+program.</p></dd>
+<dt class="hdlist1">--prompt</dt>
+<dd><p>Prompt before each invocation of the merge resolution program.
+This is the default behaviour; the option is provided to
+override any configuration settings.</p></dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_temporary_files">TEMPORARY FILES</h2>
+<div class="sectionbody"><div class="paragraph">
+<p><tt>git mergetool</tt> creates <tt>*.orig</tt> backup files while resolving merges.
+These are safe to remove once a file has been merged and its
+<tt>git mergetool</tt> session has completed.
+</p>
+</div>
+<div class="paragraph">
+<p>Setting the <tt>mergetool.keepBackup</tt> configuration variable to <tt>false</tt>
+causes <tt>git mergetool</tt> to automatically remove the backup as files
+are successfully merged.
+</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_git">GIT</h2>
+<div class="sectionbody"><div class="paragraph">
+<p>Part of the <a href="git.html">git(1)</a> suite
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
